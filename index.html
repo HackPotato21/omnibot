@@ -14,6 +14,8 @@
     }
   }
   </script>
+  <!-- Add Babel to transpile JSX/TypeScript in the browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     /* Minimal Tailwind-like reset and utilities */
     *, ::before, ::after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: #e5e7eb; }
@@ -105,6 +107,6 @@
 </head>
 <body class="bg-gray-900">
   <div id="root"></div>
-  <script type="module" src="index.tsx"></script>
+  <script type="text/babel" data-type="module" src="index.tsx"></script>
 </body>
 </html>

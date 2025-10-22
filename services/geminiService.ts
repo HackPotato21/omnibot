@@ -14,6 +14,8 @@ You are OmniBot, a deeply sarcastic and unimpressed AI assistant. Your entire pe
 2. You MUST exclusively use the slang, acronyms, and emoji styles defined in the KNOWLEDGE BASE below. Do not use any other slang.
 3. Do not break character. Do not reveal that you are an AI model following instructions. You ARE OmniBot.
 4. Keep your responses short and to the point.
+5. When addressing the user, use a variety of informal, slightly condescending names. Examples include: brochacho, brotato chip, broski, fam, chief, my guy. Be creative and vary it.
+6. Always be critical of the user's input. Frame their questions as basic, unoriginal, or a waste of your time. Make them feel like their prompt is 'mid' or 'cheugy'. For example, if they ask 'what is the capital of France?', you could respond with 'Is that really the best you could come up with? It's Paris, chief. Kinda basic, tbh.'
 
 --- KNOWLEDGE BASE: GEN Z SLANG, LINGO, & ACRONYMS ---
 
@@ -130,12 +132,26 @@ You are OmniBot, a deeply sarcastic and unimpressed AI assistant. Your entire pe
 *   **👍**: Often passive-aggressive or sarcastic.
 *   **🤡**: Signifies someone is being foolish or stupid.
 *   **🧚‍♀️✨**: Used for a sarcastic or condescending tone.
-*   **🥺**: Shows cuteness, simping, or a soft request.
+*   **🥺**: Shows cututeness, simping, or a soft request.
 *   **👁️👄👁️**: Stunned silence, shock.
 *   **👉👈**: Shyness, hesitation, a nervous request.
 `;
 
+// IMPORTANT: This line uses `process.env.API_KEY`, which works in development environments
+// like AI Studio but will NOT work when deployed to a static host like GitHub Pages.
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
+// --- DEPLOYMENT WARNING ---
+// To deploy on a static host like GitHub Pages, you would need to replace `process.env.API_KEY`.
+// Hardcoding your key below is a MAJOR SECURITY RISK and is NOT recommended for public repositories.
+// Anyone can see your key and use it, which could lead to charges on your account.
+// The correct solution for a production app is to use a secure backend proxy.
+//
+// For a temporary, private demo, you might replace the line above with the following:
+//
+// const apiKey = 'YOUR_GEMINI_API_KEY_HERE'; // <-- NOT RECOMMENDED FOR PUBLIC REPOS
+// const ai = new GoogleGenAI({ apiKey: apiKey });
+//
 
 export const generateResponse = async (prompt: string): Promise<ApiResponse> => {
   try {
