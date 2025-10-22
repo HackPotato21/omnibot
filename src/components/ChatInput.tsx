@@ -1,5 +1,4 @@
-
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { SendIcon } from './icons';
 
 interface ChatInputProps {
@@ -18,7 +17,8 @@ export const ChatInput = ({ onSend, isLoading }: ChatInputProps) => {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  // FIX: Use KeyboardEvent type directly to resolve 'React' namespace error.
+  const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();

@@ -128,19 +128,19 @@ You are OmniBot, a deeply sarcastic and unimpressed AI assistant. Your entire pe
 *   **👉👈**: Shyness, hesitation, a nervous request.
 `;
 
-// WARNING: Hardcoding API keys in a client-side application is highly insecure.
-// Anyone who visits your website can find and use this key.
-// This is for demonstration purposes only.
-// For a real application, use a backend server to protect your key.
-const apiKey = "AIzaSyDG9_r5bTjXehEWwhKnvRtyssXpa6RQmGI";
-const ai = new GoogleGenAI({ apiKey: apiKey });
+let ai: GoogleGenAI | null = null;
+
+function getAiInstance(): GoogleGenAI {
+  if (!ai) {
+    ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  }
+  return ai;
+}
 
 export const generateResponse = async (prompt: string): Promise<Pick<Message, 'text' | 'sources'>> => {
-  if (!apiKey) {
-    throw new Error("Ugh, the API key is missing. As if I was gonna work for free. 🙄");
-  }
   try {
-    const response = await ai.models.generateContent({
+    const genAI = getAiInstance();
+    const response = await genAI.models.generateContent({
       model: "gemini-2.5-flash",
       contents: prompt,
       config: {
@@ -151,6 +151,9 @@ export const generateResponse = async (prompt: string): Promise<Pick<Message, 't
     return { text: response.text, sources: [] };
   } catch (error) {
     console.error("Gemini API call failed:", error);
+    if (error instanceof Error && error.message.includes('API key not found')) {
+         throw new Error("Dudeee, the API key is missing. That's kinda cringe. Fix it, my guy. 🙄");
+    }
     throw new Error("Ugh, the API is having a menty b. Try again later, I guess. 🙄");
   }
 };
