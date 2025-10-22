@@ -1,4 +1,3 @@
-
 # OmniBot - Your Sarcastic AI Companion
 
 An intelligent AI chatbot with a sarcastic Gen Z persona, built with React, TypeScript, and Vite, and powered by the Google Gemini API.
@@ -31,11 +30,7 @@ An intelligent AI chatbot with a sarcastic Gen Z persona, built with React, Type
     ```
 
 3.  **Set up your API Key:**
-    Create a file named `.env.local` in the root of the project and add your Gemini API key to it:
-    ```
-    VITE_GEMINI_API_KEY=your_api_key_here
-    ```
-    *This file is included in `.gitignore` and will not be committed to your repository.*
+    The API key has been hardcoded in `src/services/geminiService.ts` for this demo. For a real application, you would use a `.env.local` file as described in previous versions of this guide.
 
 4.  **Run the development server:**
     ```bash
@@ -43,46 +38,53 @@ An intelligent AI chatbot with a sarcastic Gen Z persona, built with React, Type
     ```
     This will start the app, typically at `http://localhost:5173`.
 
-## ✅ Solution: Deploy the Built Static Files to GitHub Pages
+## ✅ Deploying to GitHub Pages
 
-This is the recommended and most reliable way to deploy a modern web application. It involves building your app into static files first, then deploying those files.
+This project is configured for deployment to GitHub Pages. Follow these steps carefully.
 
-### Option 1: Manually Build & Push (Simple but Manual)
+### 1. Important Configuration for GitHub Pages
 
-This process mirrors the steps from the image you provided.
+For the deployed site to work correctly, the build process needs to know the exact sub-folder it will live in. This is configured in the `vite.config.ts` file.
 
-**1. Build your app locally:**
-This command compiles all your React and TypeScript code into a `dist` folder with plain HTML, CSS, and JavaScript that browsers can understand.
+I have already set it up for your current repository name:
+```javascript
+// vite.config.ts
+export default defineConfig({
+  plugins: [react()],
+  base: '/omnibot.github.io/', // This MUST match your repository name!
+})
+```
+If you ever change your repository's name, you **must** update the `base` path in `vite.config.ts` to match it.
+
+### 2. Build and Deploy Manually
+
+This is the recommended and most reliable way to deploy.
+
+**A. Build your app locally:**
+This command compiles all your code into a final `dist` folder. **You must run this every time you make changes you want to deploy.**
 
 ```bash
 npm run build
 ```
 
-**2. Push the `dist` folder to a `gh-pages` branch:**
-The `git subtree push` command is a clean way to push just the contents of a sub-folder (`dist`) to a specific branch (`gh-pages`) on your remote repository.
+**B. Push the `dist` folder to the `gh-pages` branch:**
+This command takes the contents of your newly built `dist` folder and pushes them to the special `gh-pages` branch on GitHub, which is where your live site is served from.
 
 ```bash
 git add dist -f
 git commit -m "Deploy build"
 git subtree push --prefix dist origin gh-pages
 ```
-*(Note: You may need to run `git rm -r --cached dist` if you've previously committed the dist folder by accident.)*
 
-
-**3. In your GitHub repository settings:**
-- Go to **Settings** → **Pages**.
+**C. Configure GitHub Repository Settings:**
+- Go to your repository on GitHub.
+- Click **Settings** → **Pages**.
 - Under "Build and deployment", set the **Source** to **Deploy from a branch**.
 - Set the branch to **`gh-pages`** and the folder to **`/(root)`**.
 - Click **Save**.
 
-Your site will be deployed in a few minutes.
-
-> **⚠️ Warning:** This manual method requires you to rebuild and re-push every time you update your code. For a more automated process, consider using GitHub Actions (see Option 2 below).
-
-### Option 2: Automate with GitHub Actions (Advanced)
-
-For frequent deployments, you can create a GitHub Actions workflow to automatically build and deploy your app whenever you push to your `main` branch. This is the standard for continuous deployment. You can find many pre-made workflows for Vite projects on the GitHub Actions Marketplace.
+Your site will be live at `https://hackpotato21.github.io/omnibot.github.io/` in a few minutes.
 
 ### Security Note on API Keys
 
-The method using `.env.local` and `VITE_GEMINI_API_KEY` is secure for development, but it's important to understand that when you build your app, this key gets embedded into the final JavaScript files. **Anyone who visits your live website can find this key.** For a public project, this is a major security risk. The only truly secure method for a production app is to use a backend server to hide the key, but for a personal project or demo, this client-side method is common. Be aware of the risks and monitor your API usage.
+The Gemini API key is currently hardcoded in the source code. This means **anyone who visits your live website can find and use your key.** This is a major security risk. For a personal demo, this is acceptable, but for a public, long-term project, you should use a backend service to protect your key. Be aware of the risks and monitor your API usage.
