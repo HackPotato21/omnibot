@@ -128,11 +128,17 @@ You are OmniBot, a deeply sarcastic and unimpressed AI assistant. Your entire pe
 *   **👉👈**: Shyness, hesitation, a nervous request.
 `;
 
-// FIX: The Gemini API key should be read from `process.env.API_KEY` as per the coding guidelines.
-// This replaces the use of `import.meta.env` and the manual check for the key.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// WARNING: Hardcoding API keys in a client-side application is highly insecure.
+// Anyone who visits your website can find and use this key.
+// This is for demonstration purposes only.
+// For a real application, use a backend server to protect your key.
+const apiKey = "AIzaSyDG9_r5bTjXehEWwhKnvRtyssXpa6RQmGI";
+const ai = new GoogleGenAI({ apiKey: apiKey });
 
 export const generateResponse = async (prompt: string): Promise<Pick<Message, 'text' | 'sources'>> => {
+  if (!apiKey) {
+    throw new Error("Ugh, the API key is missing. As if I was gonna work for free. 🙄");
+  }
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
