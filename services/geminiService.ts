@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { Source } from '../types';
+import { Source } from '../types.ts';
 
 interface ApiResponse {
   text: string;

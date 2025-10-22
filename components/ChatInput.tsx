@@ -1,6 +1,6 @@
 // Fix: Provide a complete implementation for the ChatInput component.
 import React, { useState, KeyboardEvent, useRef, useEffect } from 'react';
-import { SendIcon } from './icons';
+import { SendIcon } from './icons.tsx';
 
 interface ChatInputProps {
   onSend: (text: string) => void;

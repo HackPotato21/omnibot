@@ -1,7 +1,7 @@
 // Fix: Provide a complete implementation for the ChatMessage component.
 import React from 'react';
-import { ChatMessage as ChatMessageType } from '../types';
-import { UserIcon, BotIcon } from './icons';
+import { ChatMessage as ChatMessageType } from '../types.ts';
+import { UserIcon, BotIcon } from './icons.tsx';
 
 interface ChatMessageProps {
   message: ChatMessageType;

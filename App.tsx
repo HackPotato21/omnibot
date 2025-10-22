@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { ChatMessage as ChatMessageType } from './types';
-import { generateResponse } from './services/geminiService';
-import Header from './components/Header';
-import ChatInput from './components/ChatInput';
-import ChatMessage from './components/ChatMessage';
+import { ChatMessage as ChatMessageType } from './types.ts';
+import { generateResponse } from './services/geminiService.ts';
+import Header from './components/Header.tsx';
+import ChatInput from './components/ChatInput.tsx';
+import ChatMessage from './components/ChatMessage.tsx';
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
