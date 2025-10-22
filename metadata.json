@@ -1,0 +1,5 @@
+{
+  "name": "OmniBot - Your AI Companion",
+  "description": "An intelligent AI chatbot that leverages the power of the web when online to provide up-to-date and comprehensive answers, and offers basic functionality when offline.",
+  "requestFramePermissions": []
+}
